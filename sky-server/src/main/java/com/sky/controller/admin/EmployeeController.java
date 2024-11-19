@@ -60,7 +60,6 @@ public class EmployeeController {
                 .build();
 
 
-
         return Result.success(employeeLoginVO);
     }
 
@@ -77,9 +76,9 @@ public class EmployeeController {
     //todo
     @PostMapping
     @ApiOperation("新增员工")
-    public Result save(@RequestBody EmployeeDTO employeeDTO){
-        System.out.println("save方法+"+"current thread is :"+Thread.currentThread().getId());
-        log.info("新增员工：{}",employeeDTO);
+    public Result save(@RequestBody EmployeeDTO employeeDTO) {
+        System.out.println("save方法+" + "current thread is :" + Thread.currentThread().getId());
+        log.info("新增员工：{}", employeeDTO);
         employeeService.save(employeeDTO);
         return Result.success();
     }
@@ -88,17 +87,31 @@ public class EmployeeController {
     @ApiOperation("员工分页查询")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
         log.info("员工分页查询，参数为：{}", employeePageQueryDTO);
-        PageResult pageResult =employeeService.PageQuery(employeePageQueryDTO);
+        PageResult pageResult = employeeService.PageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
 
 
     @PostMapping("/status/{status}")
     @ApiOperation("启用禁用员工账号")
-    public Result startOrStop(@PathVariable Integer status,Long id){
-        log.info("启用禁用员工账号：{},{}",status,id);
-        employeeService.startOrStop(status,id);
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("启用禁用员工账号：{},{}", status, id);
+        employeeService.startOrStop(status, id);
         return Result.success();
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工信息")
+    public Result<Employee> getById(@PathVariable Long id) {
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("编辑员工信息：{}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }
