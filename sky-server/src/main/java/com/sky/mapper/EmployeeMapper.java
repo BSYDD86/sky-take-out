@@ -28,9 +28,10 @@ public interface EmployeeMapper {
 
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
+    @AutoFill(value= OperationType.UPDATE)
     void update(Employee employee);
 
-    @Select("select * from employee where id = #{id}")
+    @Select("select * from sky_take_out.employee where id = #{id}")
     @AutoFill(value= OperationType.UPDATE)
     Employee getById(Long id);
 }
